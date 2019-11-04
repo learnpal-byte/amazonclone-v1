@@ -12,8 +12,11 @@
               <div class="a-spacing-top-medium">
                 <label>Category</label>
                 <select class="a-select-option">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option
+                    v-for="category in categories"
+                    :value="category._id"
+                    :key="category._id"
+                  >{{ category.type }}</option>
                 </select>
               </div>
 
@@ -21,8 +24,11 @@
               <div class="a-spacing-top-medium">
                 <label>Owner</label>
                 <select class="a-select-option">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option
+                    v-for="owner in owners"
+                    :value="owner._id"
+                    :key="owner._id"
+                  >{{ owner.name }}</option>
                 </select>
               </div>
               <!-- Title input -->
@@ -76,5 +82,26 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ $axios }) {
+    try {
+      let categories = $axios.$get("http://localhost:3000/api/categories");
+      let owners = $axios.$get("http://localhost:3000/api/owners");
+
+      const [catResponse, ownerResponse] = await Promise.all([
+        categories,
+        owners
+      ]);
+
+      console.log(catResponse);
+
+      return {
+        categories: catResponse.categories,
+        owners: ownerResponse.owners
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
 </script>
