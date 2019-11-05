@@ -79,6 +79,7 @@ router.put("/products/:id", upload.single("photo"), async (req, res) => {
           price: req.body.price,
           category: req.body.categoryID,
           photo: req.file.location,
+          stockQuantity: req.body.stockQuantity,
           description: req.body.description,
           owner: req.body.ownerID
         }
