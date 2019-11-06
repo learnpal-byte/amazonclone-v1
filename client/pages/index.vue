@@ -1,27 +1,26 @@
 <template>
-  <div class="container">
-    <nuxt-link to="/products" class="a-button-buy-again">Add a new product</nuxt-link>
-    <div>
-      <logo />
-      <h1 class="title">client</h1>
-      <h2 class="subtitle">My first-class Nuxt.js project</h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
+  <main class="listingPage">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-2 col-lg-3 md-4 col-sm-4">
+          <!--- Sidebar -->
+        </div>
+
+        <!--- Main Content --->
+        <div class="col-xl-10 col-lg-9 md-8 col-sm-8">
+          <FeaturedProduct />
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
-<script>
-import Logo from "~/components/Logo.vue";
 
+<script>
+import FeaturedProduct from "~/components/FeaturedProduct";
 export default {
   components: {
-    Logo
+    FeaturedProduct
   }
 };
 </script>
-
-<style>
-</style>
