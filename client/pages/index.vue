@@ -12,7 +12,7 @@
 
           <div class="mainResults">
             <ul class="s-result-list">
-              <li class="s-result-item celwidget">
+              <li class="s-result-item celwidget" v-for="product in products" :key="product._id">
                 <div class="s-item-container">
                   <!-- Best seller -->
                   <div class="a-spacing-micro">
@@ -26,11 +26,7 @@
                       <!-- Image -->
                       <div class="col-sm-3 text-center">
                         <a href="#">
-                          <img
-                            src="/img/featuredProduct.jpg"
-                            style="width: 150px;"
-                            class="img-fluid"
-                          />
+                          <img :src="product.photo" style="width: 150px;" class="img-fluid" />
                         </a>
                       </div>
 
@@ -39,7 +35,7 @@
                           <!-- Title and Date -->
                           <a href="#" class="a-link-normal">
                             <h2 class="a-size-medium">
-                              Harry Potter
+                              {{ product.title }}
                               <span class="a-letter-space"></span>
                               <span class="a-letter-space"></span>
                               <span class="a-size-small a-color-secondary">Sep 3, 2019</span>
@@ -51,7 +47,7 @@
                         <div class="a-row a-spacing-small">
                           <span class="a-size-small a-color-secondary">by</span>
                           <span class="a-size-small a-color-secondary">
-                            <a class="a-link-normal a-text-normal" href="#">JK Rowling</a>
+                            <a class="a-link-normal a-text-normal" href="#">{{ product.owner.name }}</a>
                           </span>
                         </div>
 
@@ -69,11 +65,11 @@
                             <!-- Price -->
                             <div class="a-row a-spacing-none">
                               <a href="#" class="a-link-normal a-text-normal">
-                                <span class="a-offscreen">$99</span>
+                                <span class="a-offscreen">${{ product.price }}</span>
                                 <span class="a-color-base sx-zero-spacing">
                                   <span class="sx-price sx-price-large">
                                     <sup class="sx-price-currency">$</sup>
-                                    <span class="sx-price-whole">99</span>
+                                    <span class="sx-price-whole">{{ product.price }}</span>
                                     <sup class="sx-price-fractional">00</sup>
                                   </span>
                                 </span>
@@ -121,6 +117,17 @@ import FeaturedProduct from "~/components/FeaturedProduct";
 export default {
   components: {
     FeaturedProduct
+  },
+  async asyncData({ $axios }) {
+    try {
+      let response = await $axios.$get("/api/products");
+      console.log(response);
+      return {
+        products: response.products
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 </script>

@@ -1,3 +1,5 @@
+const URL = "http://localhost:3000";
+
 export default {
   mode: "universal",
   /*
@@ -50,7 +52,10 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    proxy: true,
+    baseURL: URL
+  },
   /*
    ** Build configuration
    */
