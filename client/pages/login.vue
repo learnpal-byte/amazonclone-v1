@@ -13,17 +13,7 @@
           <form class="mt-4">
             <div class="a-box a-spacing-extra-large">
               <div class="a-box-inner">
-                <h1 class="a-spacing-small">Create account</h1>
-                <!-- Your Name -->
-                <div class="a-row a-spacing-base">
-                  <label for="ap_customer_name" class="a-form-label">Your name</label>
-                  <input
-                    type="text"
-                    id="ap_customer_name"
-                    class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
-                    v-model="name"
-                  />
-                </div>
+                <h1 class="a-spacing-small">Sign In</h1>
                 <!-- Email -->
                 <div class="a-row a-spacing-base">
                   <label for="ap_customer_name" class="a-form-label">Email</label>
@@ -51,7 +41,7 @@
                 <div class="a-row a-spacing-extra-large mb-4">
                   <span class="a-button-primary">
                     <span class="a-button-inner">
-                      <span class="a-button-text" @click="onSignup">Create your Amazon account</span>
+                      <span class="a-button-text" @click="onLogin">Continue</span>
                     </span>
                   </span>
                   <div class="a-row a-spacing-top-medium a-size-small">
@@ -65,8 +55,8 @@
                 <hr />
                 <div class="a-row">
                   <b>
-                    Already have an account?
-                    <nuxt-link to="/login" class="a-link-emphasis">Sign in</nuxt-link>
+                    Don't have an account?
+                    <nuxt-link to="/signup" class="a-link-emphasis">Signup</nuxt-link>
                   </b>
                 </div>
               </div>
@@ -85,34 +75,21 @@ export default {
   layout: "none",
   data() {
     return {
-      name: "",
       email: "",
       password: ""
     };
   },
   methods: {
-    async onSignup() {
+    async onLogin() {
       try {
-        let data = {
-          name: this.name,
-          email: this.email,
-          password: this.password
-        };
+        this.$auth.loginWith("local", {
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        });
 
-        let response = await this.$axios.$post("/api/auth/signup", data);
-
-        console.log(response);
-
-        if (response.success) {
-          this.$auth.loginWith("local", {
-            data: {
-              email: this.email,
-              password: this.password
-            }
-          });
-
-          this.$router.push("/");
-        }
+        this.$router.push("/");
       } catch (err) {
         console.log(err);
       }
