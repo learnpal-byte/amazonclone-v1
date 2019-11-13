@@ -18,7 +18,7 @@ router.post(
       review.user = req.decoded._id;
       review.productID = req.params.productID;
 
-      await Product.update({ $push: review._id });
+      await Product.update({ $push: { rating: review._id } });
 
       const savedReview = await review.save();
 
