@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Address = require("../models/Address");
+const Address = require("../models/address");
 const verifyToken = require("../middlewares/verify-token");
 
 router.post("/addresses", verifyToken, async (req, res) => {
@@ -20,6 +20,22 @@ router.post("/addresses", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Successfully added an address"
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
+router.get("/addresses", verifyToken, async (req, res) => {
+  try {
+    let addresses = await Address.find({ user: req.decoded._id });
+
+    res.json({
+      success: true,
+      addresses: addresses
     });
   } catch (err) {
     res.status(500).json({
