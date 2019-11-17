@@ -63,6 +63,23 @@ router.get("/countries", async (req, res) => {
   }
 });
 
+/* GET API - update an address */
+router.get("/addresses/:id", verifyToken, async (req, res) => {
+  try {
+    let address = await Address.findOne({ _id: req.params.id });
+
+    res.json({
+      success: true,
+      address: address
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
 /* PUT API - update an address */
 router.put("/addresses/:id", verifyToken, async (req, res) => {
   try {

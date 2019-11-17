@@ -73,14 +73,11 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Delete Button -->
+                      <!-- Update Button -->
                       <div class="edit-address-desktop-link">
-                        <a href="#">Edit</a>
-                        &nbsp; | &nbsp;
-                        <a
-                          href="#"
-                          @click="onDeleteAddress(address._id, index)"
-                        >Delete</a>
+                        <nuxt-link :to="`/address/${address._id}`">Edit</nuxt-link>&nbsp; | &nbsp;
+                        <!-- Delete Button -->
+                        <a href="#" @click="onDeleteAddress(address._id, index)">Delete</a>
                         &nbsp; | &nbsp;
                         <!-- Set Address as Default -->
                         <a href="#" @click="onSetDefault(address._id)">Set as Default</a>
