@@ -17,3 +17,25 @@ export const actions = {
     commit("incrementCartLength");
   }
 };
+
+export const mutations = {
+  pushProductToCart(state, product) {
+    product.quantity = 1;
+    state.cart.push(product);
+  },
+
+  incrementProductQty(state, product) {
+    product.quantity++;
+    let indexOfProduct = state.cart.indexOf(product);
+    state.cart.splice(indexOfProduct, 1, product);
+  },
+
+  incrementCartLength(state) {
+    state.cartLength = 0;
+    if (state.cart.length > 0) {
+      state.cart.map(product => {
+        state.cartLength += product.quantity;
+      });
+    }
+  }
+};
