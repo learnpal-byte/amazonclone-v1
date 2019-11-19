@@ -11,7 +11,7 @@ export const actions = {
     if (!cartProduct) {
       commit("pushProductToCart", product);
     } else {
-      commit("incrementProductQty", product);
+      commit("incrementProductQty", cartProduct);
     }
 
     commit("incrementCartLength");
