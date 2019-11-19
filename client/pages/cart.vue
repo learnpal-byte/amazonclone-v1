@@ -17,14 +17,14 @@
                   </div>
                 </div>
                 <!-- List of the item -->
-                <div class="sc-list-body">
+                <div class="sc-list-body" v-for="product in getCart" :key="product._id">
                   <div class="sc-list-item-border">
                     <div class="a-row a-spacing-top-base a-spacing-base">
                       <div class="row">
                         <!-- Product's Image -->
                         <div class="col-sm-2 col-2">
                           <a href="#" class="a-link-normal">
-                            <img class="img-fluid w-100" />
+                            <img :src="product.photo" class="img-fluid w-100" />
                           </a>
                         </div>
                         <div class="col-sm-8 col-8">
@@ -33,9 +33,9 @@
                             <a
                               href="#"
                               class="a-link-normal a-size-medium a-text-bold"
-                            >Product's Title</a>
+                            >{{ product.title }}</a>
                             <!-- Product's Owner name -->
-                            <span class="a-size-base sc-product-creator">by ProductOwner</span>
+                            <span class="a-size-base sc-product-creator">{{ product.owner.name }}</span>
                           </div>
                           <div>
                             <span
@@ -80,7 +80,7 @@
                           <p class="a-spacing-small">
                             <span
                               class="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-product-price sc-price-sign a-text-bold"
-                            >$49</span>
+                            >${{ product.price * product.quantity}}</span>
                           </p>
                         </div>
                       </div>
@@ -92,10 +92,10 @@
                 <div class="text-right">
                   <!-- Cart Subtotal -->
                   <p class="a-spacing-none a-spacing-top-mini">
-                    <span class="a-size-medium">Subtotal (2 item)</span>
+                    <span class="a-size-medium">Subtotal ({{getCartLength}} item)</span>
                     <span class="a-color-price a-text-bold">
                       <!-- Cart Total Price -->
-                      <span class="a-size-medium a-color-price">$99</span>
+                      <span class="a-size-medium a-color-price">${{ getCartTotalPrice }}</span>
                     </span>
                   </p>
                 </div>
@@ -110,10 +110,10 @@
                     <p class="a-spacing-none a-spacing-top-none">
                       <!-- Cart Subtotal -->
                       <span class="a-size-medium">
-                        <span>Subtotal (2 item):</span>
+                        <span>Subtotal ({{getCartLength}} item):</span>
                         <span class="a-color-price a-text-bold">
                           <!-- Cart Total Price  -->
-                          <span class="a-size-medium a-color-price">$99</span>
+                          <span class="a-size-medium a-color-price">${{ getCartTotalPrice }}</span>
                         </span>
                       </span>
                     </p>
@@ -192,5 +192,13 @@
   </main>
   <!--/MAIN-->
 </template>
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["getCart", "getCartTotalPrice", "getCartLength"])
+  }
+};
+</script>
 
 
