@@ -110,7 +110,11 @@
                 <span aria-hidden="true" class="nav-line-1"></span>
                 <span aria-hidden="true" class="nav-line-2">Cart</span>
                 <span class="nav-cart-icon nav-sprite"></span>
-                <span id="nav-cart-count" aria-hidden="true" class="nav-cart-count nav-cart-0">0</span>
+                <span
+                  id="nav-cart-count"
+                  aria-hidden="true"
+                  class="nav-cart-count nav-cart-0"
+                >{{ getCartLength }}</span>
               </nuxt-link>
             </div>
           </div>
@@ -121,10 +125,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Search from "~/components/Search";
 export default {
   components: {
     Search
+  },
+  computed: {
+    ...mapGetters(["getCartLength"])
   }
 };
 </script>
