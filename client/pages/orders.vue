@@ -64,7 +64,7 @@
                     <br />
                     <!-- Owner's name -->
                     <a href class="a-size-base font-weight-bold a-link-normal">
-                      Jack
+                      {{ $auth.$state.user.name }}
                       <i class="far fa-chevron-down"></i>
                     </a>
                   </div>
@@ -84,31 +84,31 @@
               </div>
             </div>
             <!-- Orders body -->
-            <div class="orderContentBodyAlt">
+            <div class="orderContentBodyAlt" v-for="order in orders" :key="order._id">
               <div class="a-row">
                 <h1
                   class="a-size-medium a-text-bold"
                   style="color: #111 !important;font-family: 'MyWebFont',Arial,sans-serif !important; "
                 >
                   <!-- Estimated Delivery -->
-                  Estimated Delivery -
+                  Estimated Delivery - {{ order.estimatedDelivery}}
                 </h1>
               </div>
               <!-- List of products from order -->
-              <div>
+              <div v-for="product in order.products" :key="product._id">
                 <div class="a-spacing-base"></div>
                 <div class="row">
                   <div class="col-xl-2 col-lg-2 col-2">
                     <!-- Product's image -->
                     <a href="#">
-                      <img class="img-fluid" style="width: 100px;" />
+                      <img :src="product.productID.photo" class="img-fluid" style="width: 100px;" />
                     </a>
                   </div>
                   <div class="col-xl-10 col-lg-10 col-10">
                     <div class="a-row">
                       <span class="a-size-small">
                         <!-- Product title -->
-                        <a href="#">Title</a>
+                        <a href="#">{{ product.productID.title }}</a>
                       </span>
                     </div>
                     <div class="a-row">
@@ -116,11 +116,14 @@
                     </div>
                     <div class="a-row">
                       <!-- Product quantity -->
-                      <span class="a-size-mini" style="color: #111; font-weight: 400;">Quantity: 3</span>
+                      <span
+                        class="a-size-mini"
+                        style="color: #111; font-weight: 400;"
+                      >Quantity: {{ product.productID.quantity }}</span>
                     </div>
                     <div class="a-row">
                       <!-- Product price -->
-                      <span class="a-size-mini a-color-price">$99</span>
+                      <span class="a-size-mini a-color-price">${{ product.productID.price }}</span>
                     </div>
                     <br />
                     <div class="a-row">
@@ -141,3 +144,20 @@
   <!--/MAIN-->
 </template>
 
+<script>
+export default {
+  async asyncData({ $axios }) {
+    try {
+      let response = await $axios.$get("/api/orders");
+
+      console.log(response.products);
+
+      return {
+        orders: response.products
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+</script>
